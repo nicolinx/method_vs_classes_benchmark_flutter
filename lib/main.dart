@@ -52,7 +52,7 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
       width: 6,
       height: 6,
       decoration: BoxDecoration(
-        color: Colors.red.shade400, // Red for method
+        color: Colors.red.shade400,
         borderRadius: BorderRadius.circular(1),
       ),
     );
@@ -71,9 +71,8 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
       body: Center(
         child: Column(
           children: [
-            // 1. Control Panel
             Padding(
-              padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+              padding: const EdgeInsets.only(top: 0.0, bottom: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -97,7 +96,6 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
               ),
             ),
 
-            // 2. The Animation Rebuilder
             Expanded(
               child: AnimatedBuilder(
                 animation: _controller,
@@ -115,9 +113,8 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
                         ),
                       ),
 
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
 
-                      // 3. IDE Code Block (Showing exactly what is running)
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(16),
@@ -126,86 +123,94 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
                           vertical: 16,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1E1E1E), // VS Code Dark Theme
+                          color: const Color(0xFF1E1E1E),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: _useConstClass
-                                ? const Color(
-                                    0xFF4ADE80,
-                                  ) // High-contrast border green
-                                : const Color(
-                                    0xFFFF5D5D,
-                                  ), // High-contrast border red
+                                ? const Color(0xFF00E676)
+                                : const Color(0xFFFF5252),
                             width: 2,
                           ),
                         ),
-                        child: Text.rich(
-                          TextSpan(
-                            style: const TextStyle(
-                              fontFamily: 'monospace',
-                              fontSize:
-                                  16, // Increased from 14 for better mobile legibility
-                              fontWeight: FontWeight
-                                  .w500, // Makes the thin monospace font thicker
-                              height: 1.5,
-                              color: Color(
-                                0xFFE0E0E0,
-                              ), // Much brighter base gray/white
-                            ),
-                            children: [
-                              const TextSpan(text: 'List.generate(\n'),
-                              const TextSpan(
-                                text: '  2500,\n',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: _useConstClass
+                                    ? const Color(
+                                        0xFF00E676,
+                                      ).withValues(alpha: 0.25)
+                                    : const Color(
+                                        0xFFFF5252,
+                                      ).withValues(alpha: 0.25),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                _useConstClass
+                                    ? '✅ 1 single memory allocation reused 2500x'
+                                    : '❌ 2500 brand new memory allocations/frame',
                                 style: TextStyle(
-                                  color: Color(
-                                    0xFFFFB86C,
-                                  ), // Brighter, punchier orange
+                                  color: _useConstClass
+                                      ? const Color(0xFF00E676)
+                                      : const Color(0xFFFF5252),
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const TextSpan(text: '  (index) => '),
+                            ),
 
-                              // Dynamically swaps the text based on the active mode!
-                              if (_useConstClass) ...[
-                                const TextSpan(
-                                  text: 'const ',
-                                  style: TextStyle(
-                                    color: Color(
-                                      0xFF4ADE80,
-                                    ), // Bright mint-green
-                                    fontWeight:
-                                        FontWeight.w900, // Extra bold to pop
-                                  ),
-                                ),
-                                const TextSpan(
-                                  text: 'PixelClass(),\n',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ] else ...[
-                                const TextSpan(
-                                  text: '_buildPixelMethod(),\n',
-                                  style: TextStyle(
-                                    color: Color(
-                                      0xFFFF5D5D,
-                                    ), // Bright coral-red
-                                    fontWeight: FontWeight.w900, // Extra bold
-                                  ),
-                                ),
-                              ],
+                            const SizedBox(height: 8),
 
-                              const TextSpan(text: ');'),
-                            ],
-                          ),
+                            Text.rich(
+                              TextSpan(
+                                style: const TextStyle(
+                                  fontFamily: 'monospace',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.5,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                                children: [
+                                  const TextSpan(text: 'List.generate(\n'),
+                                  const TextSpan(
+                                    text: '  2500,\n',
+                                    style: TextStyle(
+                                      color: Color(0xFFFFCA28),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const TextSpan(text: '  (index) => '),
+                                  if (_useConstClass)
+                                    const TextSpan(
+                                      text: 'const PixelClass(),\n',
+                                      style: TextStyle(
+                                        color: Color(0xFF00E676),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  else
+                                    const TextSpan(
+                                      text: '_buildPixelMethod(),\n',
+                                      style: TextStyle(
+                                        color: Color(0xFFFF5252),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  const TextSpan(text: ');'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
 
                       const SizedBox(height: 16),
 
-                      // 4. THE PAYLOAD 👇
-                      // Now the List.generate wraps the toggle, exactly as you asked!
                       SizedBox(
                         width: 400,
                         child: Wrap(
@@ -214,8 +219,8 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
                           children: List.generate(
                             2500,
                             (index) => _useConstClass
-                                ? const PixelClass() // ✅ 1 single memory allocation reused 2500 times
-                                : _buildPixelMethod(), // ❌ 2500 brand new memory allocations every frame
+                                ? const PixelClass()
+                                : _buildPixelMethod(),
                           ),
                         ),
                       ),
@@ -242,7 +247,7 @@ class PixelClass extends StatelessWidget {
       width: 6,
       height: 6,
       decoration: BoxDecoration(
-        color: Colors.green.shade400, // Green for class
+        color: Colors.green.shade400,
         borderRadius: BorderRadius.circular(1),
       ),
     );
