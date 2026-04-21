@@ -12,6 +12,7 @@ class BenchmarkApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'GC Overload Test',
+      debugShowCheckedModeBanner: false,
       home: AnimationBenchmarkScreen(),
     );
   }
@@ -135,37 +136,36 @@ class _AnimationBenchmarkScreenState extends State<AnimationBenchmarkScreen>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: _useConstClass
-                                    ? const Color(
-                                        0xFF00E676,
-                                      ).withValues(alpha: 0.25)
-                                    : const Color(
-                                        0xFFFF5252,
-                                      ).withValues(alpha: 0.25),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                _useConstClass
-                                    ? '✅ 1 single memory allocation reused 2500x'
-                                    : '❌ 2500 brand new memory allocations/frame',
-                                style: TextStyle(
-                                  color: _useConstClass
-                                      ? const Color(0xFF00E676)
-                                      : const Color(0xFFFF5252),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   padding: const EdgeInsets.symmetric(
+                            //     horizontal: 8,
+                            //     vertical: 4,
+                            //   ),
+                            //   decoration: BoxDecoration(
+                            //     color: _useConstClass
+                            //         ? const Color(
+                            //             0xFF00E676,
+                            //           ).withValues(alpha: 0.25)
+                            //         : const Color(
+                            //             0xFFFF5252,
+                            //           ).withValues(alpha: 0.25),
+                            //     borderRadius: BorderRadius.circular(4),
+                            //   ),
+                            //   child: Text(
+                            //     _useConstClass
+                            //         ? '✅ 1 single memory allocation reused 2500x'
+                            //         : '❌ 2500 new memory allocations/frame',
+                            //     style: TextStyle(
+                            //       color: _useConstClass
+                            //           ? const Color(0xFF00E676)
+                            //           : const Color(0xFFFF5252),
+                            //       fontSize: 12,
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            // ),
 
-                            const SizedBox(height: 8),
-
+                            // const SizedBox(height: 8),
                             Text.rich(
                               TextSpan(
                                 style: const TextStyle(
