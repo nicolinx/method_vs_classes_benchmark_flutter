@@ -11,6 +11,10 @@ In this benchmark, we render **2,500 widgets**.
 - **Method Mode:** Creates 2,500 new objects 60 times a second. This spikes the UI thread and causes visible stuttering.
 - **Class Mode:** Uses `const` widgets. Flutter allocates the memory **once** and reuses the same reference, resulting in 0ms build time for those widgets during re-renders.
 
+## Benchmark Visualization
+
+![Flutter Performance Benchmark GIF](./assets/benchmark.gif)
+
 ## How to test
 
 1. Run the app in **Profile Mode** (`flutter run --profile`). Performance issues are hard to see in Debug mode.
@@ -56,3 +60,7 @@ _Mobile Engineer | Flutter Specialist | Full-Stack Engineer_
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nicodemus-lin/)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nicolinx)
+
+---
+
+_Benchmark recorded using Flutter 3.41.7 • Dart 3.11.5 • DevTools 2.54.2_
